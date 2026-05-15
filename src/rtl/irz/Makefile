@@ -2,8 +2,9 @@ include ../../../make/config.make
 NAME = irz
 
 VHD_FILES := \
+	rtl/spi_phy.vhd \
 	rtl/serahb.vhd \
-	rtl/serahb_fpga.vhd 
+	rtl/serahb_fpga.vhd
 all: syn ../../../build/$(NAME).touch 
 
 ../../../build/$(NAME).touch: $(VLOG_FILES) $(VHD_FILES) | lib

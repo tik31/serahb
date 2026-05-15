@@ -11,8 +11,8 @@ CURRENT_DIR := $(CURDIR)
 LIBS = grlib techmap gaisler lfast_comps irz  
 
 
-TB_LIBS = testbench 
-#tb_uart tb_jtag testbench 
+TB_LIBS = testbench spi
+#tb_uart tb_jtag testbench
 
 # Main targets
 all: syn_source precomp_libs $(addprefix lib-,$(LIBS)) $(addprefix tb-,$(TB_LIBS))

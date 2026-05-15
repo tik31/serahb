@@ -26,10 +26,8 @@ ENTITY serahb IS
 		mindex : integer := 0;
 		hirq   : integer := 0
     );
-    PORT( 
+    PORT(
         clk          	: IN	std_logic;
-		clk_tx         	: IN	std_logic;
-		clk_rx         	: IN	std_logic;
         rst          	: IN	std_logic;
         ahbsi        	: IN	ahb_slv_in_type;
         ahbso        	: OUT	ahb_slv_out_type;
@@ -1073,22 +1071,22 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 		end if;
 	end process;	
 	
-	regrx: process (clk_rx, reset)
+	regrx: process (clk, reset)
 	begin
 		if (reset = '0') then
 			rrx <= RESRX;
-		elsif (clk_rx'event and clk_rx = '1') then
+		elsif (clk'event and clk = '1') then
 			rrx <= rrxin;
 			--mem_recv <= rmem_recv;
 			--mem_wdata <= rmem_wdata;
 		end if;
-	end process;	
-	
-	regtx: process (clk_tx, reset)
+	end process;
+
+	regtx: process (clk, reset)
 	begin
 		if (reset = '0') then
 			rtx <= RESTX;
-		elsif (clk_tx'event and clk_tx = '1') then
+		elsif (clk'event and clk = '1') then
 			rtx <= rtxin;
 		end if;
 	end process;
@@ -1097,10 +1095,10 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 	generic map(
 		abits => 10,
 		dbits => 32,
-		sepclk => 1
+		sepclk => 0
 	)
 	port map(
-		rclk => clk_tx,
+		rclk => clk,
 		wclk => clk,
 		rdaddress => rtx.ra_mem_xmit,
 		wraddress => r.wa_mem_xmit,
@@ -1108,16 +1106,16 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 		wren => r.wr_mem_xmit,
 		q => rd_mem_xmit
 	);
-	
+
 	mem_recv: generic_syncram_2p
 	generic map(
 		abits => 10,
 		dbits => 32,
-		sepclk => 1
+		sepclk => 0
 	)
 	port map(
 		rclk => clk,
-		wclk => clk_rx,
+		wclk => clk,
 		rdaddress => ra_mem_recv,
 		wraddress => rrx.wa_mem_recv,
 		data => rrx.wd_mem_recv,
@@ -1129,26 +1127,26 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 	generic map(
 		abits => 10,
 		dbits => 32,
-		sepclk => 1
+		sepclk => 0
 	)
 	port map(
 		rclk => clk,
-		wclk => clk_rx,
+		wclk => clk,
 		rdaddress => ra_mem_wdata,
 		wraddress => rrx.wa_mem_wdata,
 		data => rrx.wd_mem_wdata,
 		wren => rrx.wr_mem_wdata,
 		q => rd_mem_wdata
 	);
-	
+
 	mem_rply: generic_syncram_2p
 	generic map(
 		abits => 10,
 		dbits => 32,
-		sepclk => 1
+		sepclk => 0
 	)
 	port map(
-		rclk => clk_tx,
+		rclk => clk,
 		wclk => clk,
 		rdaddress => rtx.ra_mem_rply,
 		wraddress => r.wa_mem_rply,

@@ -93,8 +93,6 @@ architecture arch of dut is
 		);
 		port (
 			clk          	: IN	std_logic;
-			clk_tx         	: IN	std_logic;
-			clk_rx         	: IN	std_logic;
 			rst          	: IN	std_logic;
 			ahbsi        	: IN	ahb_slv_in_type;
 			ahbso        	: OUT	ahb_slv_out_type;
@@ -192,8 +190,6 @@ begin  -- architecture behav
 		)
 		port map (
 			clk          	=> clkm,
-			clk_tx			=> clk_tx,
-			clk_rx			=> clk_rx,
 			rst          	=> rstn,
 			ahbsi        	=> ahbsi,
 			ahbso        	=> ahbso(1),

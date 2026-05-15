@@ -99,8 +99,6 @@ architecture arch of serahb_fpga is
 		);
 		port (
 			clk          	: IN	std_logic;
-			clk_tx         	: IN	std_logic;
-			clk_rx         	: IN	std_logic;
 			rst          	: IN	std_logic;
 			ahbsi        	: IN	ahb_slv_in_type;
 			ahbso        	: OUT	ahb_slv_out_type;
@@ -237,8 +235,6 @@ begin  -- architecture behav
 		)
 		port map (
 			clk          	=> clk,
-			clk_tx			=> clk_tx,
-			clk_rx			=> clk_rx,
 			rst          	=> rst,
 			ahbsi        	=> ahbsi,
 			ahbso        	=> ahbso(SERAHB_SHINDEX),

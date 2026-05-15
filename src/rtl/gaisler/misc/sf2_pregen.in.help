@@ -1,0 +1,4 @@
+SF2 Microsemi IP
+CONFIG_SF2_PREGEN
+	Say Y here to use pregenerated Microsemi IP
+

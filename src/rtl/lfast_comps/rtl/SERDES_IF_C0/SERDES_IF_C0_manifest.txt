@@ -1,0 +1,37 @@
+Microchip Technology Inc. - Microchip Libero Software Release 2025.2 (Version 2025.2.0.14)
+
+Date      :  Fri May 15 15:06:23 2026
+Project   :  D:\lfast_pll\lfast_pll
+Component :  SERDES_IF_C0
+Family    :  SmartFusion2
+
+
+HDL source files for all Synthesis and Simulation tools:
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDES_IF_C0_SERDES_IF_C0_0_SERDES_IF.v
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0.v
+
+HDL source files for Synopsys SynplifyPro Synthesis tool:
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDES_IF_C0_SERDES_IF_C0_0_SERDES_IF_syn.v
+
+HDL source files for Mentor Precision Synthesis tool:
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDES_IF_C0_SERDES_IF_C0_0_SERDES_IF_pre.v
+
+Stimulus files for all Simulation tools:
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDESIF_0_user.bfm
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDESIF_0_compile_bfm.tcl
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDESIF_0_user.bfm
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDESIF_0_compile_bfm.tcl
+
+Firmware files for all Software IDE tools:
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/sys_config_SERDESIF_0.c
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/sys_config_SERDESIF_0.h
+
+Configuration files to be used for all Simulation tools:
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDESIF_0_init.bfm
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDESIF_0_init.bfm
+
+Configuration files to be used for Power Analysis:
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0/SERDES_IF_C0_0/SERDESIF_0_init.reg
+
+Constraint files:
+    D:/lfast_pll/lfast_pll/component/work/SERDES_IF_C0\SERDES_IF_C0_0\SERDES_IF_C0_SERDES_IF_C0_0_SERDES_IF.sdc

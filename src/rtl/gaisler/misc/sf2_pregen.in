@@ -1,0 +1,3 @@
+  bool 'Use pregenerated Microsemi IP  ' CONFIG_SF2_PREGEN
+
+  

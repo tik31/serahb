@@ -1,0 +1,8 @@
+AHB Memory Scrubber
+CONFIG_MEMSCRUB_ENABLE
+  Say Y here to enable the AHB memory scrubber (MEMSCRUB IP).
+
+Number of EDAC slaves
+CONFIG_MEMSCRUB_NFTSLV
+  Select how many EDAC slaves with correctable error signals that should 
+  be connected to the scrubber.

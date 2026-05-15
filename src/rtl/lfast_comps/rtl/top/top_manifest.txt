@@ -1,0 +1,15 @@
+Microchip Technology Inc. - Microchip Libero Software Release 2025.2 (Version 2025.2.0.14)
+
+Date      :  Fri May 15 13:53:48 2026
+Project   :  D:\lfast_pll\lfast_pll
+Component :  top
+Family    :  SmartFusion2
+
+
+HDL source files for all Synthesis and Simulation tools:
+    D:/lfast_pll/lfast_pll/component/work/top/top.v
+
+Stimulus files for all Simulation tools:
+    D:/lfast_pll/lfast_pll/component/work/top/subsystem.bfm
+    D:/lfast_pll/lfast_pll/component/work/top/subsystem.bfm
+

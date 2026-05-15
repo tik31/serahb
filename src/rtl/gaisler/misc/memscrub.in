@@ -1,0 +1,4 @@
+    bool 'Enable AHB Memory Scrubber  ' CONFIG_MEMSCRUB_ENABLE
+    if [ "$CONFIG_MEMSCRUB_ENABLE" = "y" ]; then
+        int 'Number of correctable-error slaves  '   CONFIG_MEMSCRUB_NFTSLV 1
+    fi

@@ -1,0 +1,31 @@
+Microchip Technology Inc. - Microchip Libero Software Release 2025.2 (Version 2025.2.0.14)
+
+Date      :  Fri May 15 15:07:52 2026
+Project   :  D:\lfast_pll\lfast_pll
+Component :  COREABC_C0
+Family    :  SmartFusion2
+
+
+HDL source files for all Synthesis and Simulation tools:
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/coreparameters_tgi.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/instructions.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/acmtable.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/support.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/ramblocks.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/instructram.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/debugblk.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/coreabc.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/ram128x8_smartfusion2.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/iram512x9_rtl.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/ram256x16_rtl.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/ram256x8_rtl.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/core/instructnvm_bb.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0.v
+
+Stimulus files for all Simulation tools:
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/test/testsupport.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/test/apbmodel.v
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0/COREABC_C0_0/rtl/vlog/test/testbench.v
+
+Constraint files:
+    D:/lfast_pll/lfast_pll/component/work/COREABC_C0\COREABC_C0_0\COREABC_C0_COREABC_C0_0_COREABC.sdc

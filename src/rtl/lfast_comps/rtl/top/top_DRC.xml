@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="drcss.xsl"?>
+<drcreport>
+  <header>top</header>
+  <drc>
+    <status>D:\Microchip\Libero_SoC_2025.2\Libero_SoC\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Floating Driver</message>
+    <detail>Floating output pin COREABC_C0_0:PRESETN</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/top/pins/COREABC_C0_0:PRESETN</crossprobe>
+  </drc>
+  <drc>
+    <status>D:\Microchip\Libero_SoC_2025.2\Libero_SoC\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Floating Driver</message>
+    <detail>Floating output bus pin COREABC_C0_0:IO_OUT[0:0]</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/top/pins/COREABC_C0_0:IO_OUT</crossprobe>
+  </drc>
+  <drc>
+    <status>D:\Microchip\Libero_SoC_2025.2\Libero_SoC\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Unconnected Bus Interface</message>
+    <detail>Unconnected bus interface pin CoreAPB3_C0_0:APBmslave1</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/top/pins/CoreAPB3_C0_0:APBmslave1</crossprobe>
+  </drc>
+  <drc>
+    <status>D:\Microchip\Libero_SoC_2025.2\Libero_SoC\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Floating Driver</message>
+    <detail>Floating output bus pin CorePCS_C0_0:INVALID_K[0:0]</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/top/pins/CorePCS_C0_0:INVALID_K</crossprobe>
+  </drc>
+  <drc>
+    <status>D:\Microchip\Libero_SoC_2025.2\Libero_SoC\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Floating Driver</message>
+    <detail>Floating output bus pin CorePCS_C0_0:CODE_ERR_N[0:0]</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/top/pins/CorePCS_C0_0:CODE_ERR_N</crossprobe>
+  </drc>
+  <drc>
+    <status>D:\Microchip\Libero_SoC_2025.2\Libero_SoC\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Floating Driver</message>
+    <detail>Floating output bus pin CorePCS_C0_0:B_CERR[0:0]</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/top/pins/CorePCS_C0_0:B_CERR</crossprobe>
+  </drc>
+  <drc>
+    <status>D:\Microchip\Libero_SoC_2025.2\Libero_SoC\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Floating Driver</message>
+    <detail>Floating output bus pin CorePCS_C0_0:RD_ERR[0:0]</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/top/pins/CorePCS_C0_0:RD_ERR</crossprobe>
+  </drc>
+</drcreport>

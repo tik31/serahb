@@ -1,0 +1,12 @@
+Microchip Technology Inc. - Microchip Libero Software Release 2025.2 (Version 2025.2.0.14)
+
+Date      :  Fri Feb 27 13:58:05 2026
+Project   :  D:\liefast-sf2\liefast-sf2
+Component :  LiteFast_C0
+Family    :  SmartFusion2
+
+
+HDL source files for all Synthesis and Simulation tools:
+    D:/liefast-sf2/liefast-sf2/component/Microsemi/Solutioncore/LiteFast/1.0.5/RTL/LiteFast.v
+    D:/liefast-sf2/liefast-sf2/component/work/LiteFast_C0/LiteFast_C0.v
+

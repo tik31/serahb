@@ -1,0 +1,18 @@
+ADC/DAC Interface
+CONFIG_GRADCDAC_ENABLE
+  Say Y here to enable the external ADC/DAC interface controller.
+
+ADC/DAC Data Width
+CONFIG_GRADCDAC_DWIDTH
+  Sets the width of the external ADC/DAC data interface.
+  Only 16-bit width is currently supported.
+
+ADC/DAC Address Width
+CONFIG_GRADCDAC_ABITS
+  Set the width of the data pointers used for the circular buffers placed in memory.
+  Only 8-bit width is currently supported.
+
+ADC/DAC Interrupt
+CONFIG_GRADCDAC_IRQ
+  Set the interrupt number for the first ADC/DAC interrupt. The remaining interrupt
+  will have an incrementing interrupt number. A zero value disables all interrupts.

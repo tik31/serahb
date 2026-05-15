@@ -1,0 +1,8 @@
+    bool 'Enable FIFO interface              ' CONFIG_GRFIFO_ENABLE
+    if [ "$CONFIG_GRFIFO_ENABLE" = "y" ]; then
+      int 'FIFO data width (16 only)  '   CONFIG_GRFIFO_WIDTH 16
+      int 'Word address bits (16 only) '   CONFIG_GRFIFO_ABITS 16
+      int 'Interrupt ID               '   CONFIG_GRFIFO_IRQ 1
+      bool 'Single interrupt          '   CONFIG_GRFIFO_SINGLE
+    fi
+

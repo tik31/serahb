@@ -1,0 +1,46 @@
+Analysis
+
+---------------------------------------------
+
+Programming Errors
+
+None
+
+---------------------------------------------
+
+Instructions Used
+
+AND, APBREAD, APBWRT, APBWRT DAT, HALT, JUMP
+
+---------------------------------------------
+
+Constraints
+
+   Maximum value of APB data written directly is 3855 so 'Data Bus Width' >= 12.
+   Maximum APB slot used is 0 so 'Number of APB Slots' >= 1.
+   Maximum APB address used 41000 so 'APB Slot Size' >= 65536 locations
+   Maximum program counter is 25 so 'Maximum Number of Instructions' >= 32.
+   Z register not used so 'Z Register size' may be set to disabled.
+   'INPUTn' not used so 'Number of I/O Flags' >= 0.
+   'IOWRT' not used so 'Number of I/O Outputs' >= 0.
+   Does not use stack ('CALL', 'RETURN', 'RETISR', 'PUSH' or 'POP'), 'RAMREAD' or 'RAMWRT' so no need for 'Internal Data/Stack Memory'.
+
+---------------------------------------------
+
+Instruction Store Details
+
+   Width of instructions is Data+Addr+Slots+6 = 32+16+1+6 = 55 bits
+
+---------------------------------------------
+
+Labels
+
+Address 21:$WaitSdifRelease
+
+---------------------------------------------
+
+Symbols
+
+None
+
+---------------------------------------------

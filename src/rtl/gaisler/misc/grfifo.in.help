@@ -1,0 +1,21 @@
+FIFO Interface
+CONFIG_GRFIFO_ENABLE
+  Say Y here to enable the external FIFO interface controller.
+
+FIFO Data Width
+CONFIG_GRFIFO_WIDTH
+  Sets the width of the external FIFO data interface. Only 16-bit width is currently supported.
+
+FIFO Address Width
+CONFIG_GRFIFO_ABITS
+  Set the width of the data pointers used for the circular buffers placed in memory.
+  Valid values are from 16 to 16, inclusive.
+
+FIFO Interrupt
+CONFIG_GRFIFO_IRQ
+  Set the interrupt number for the first FIFO interrupt. Remaining six interrupts will
+  have incrementing interrupts when multiple interrupts are used. A zero value disables all interrupts.
+
+Single FIFO Interrupt
+CONFIG_GRFIFO_SINGLE
+  Enable the usage of a single FIFO interrupt, else seven separate interrupts will be used.

@@ -1,0 +1,42 @@
+Microchip Technology Inc. - Microchip Libero Software Release 2025.2 (Version 2025.2.0.14)
+
+Date      :  Wed Feb  4 18:11:36 2026
+Project   :  D:\Work\liefast-sf2\liefast-sf2
+Component :  CorePCS_C0
+Family    :  SmartFusion2
+
+
+HDL source files for all Synthesis and Simulation tools:
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/CorePCS.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DEC_DATA.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DEC_ERR.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DEC_RD.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DECODER.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/ENC_D.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/ENC_FLIP.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/ENC_K.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/ENCODER.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/MUX4X1.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/MUX32X1.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/MUX32X6.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/BUF_DATA.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DECODER_CI.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DECODER_CO.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DEC_RD_L.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DEC_RD_U.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/DEC_WA.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/ENCODER_64B80B.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/ENCODER_L.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/ENCODER_N.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/ENCODER_U.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/WORD_ALIGNER_10.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/WORD_ALIGNER_80.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/core/RESET_SYNC.v
+    D:/Work/liefast-sf2/liefast-sf2/component/work/CorePCS_C0/CorePCS_C0.v
+
+Stimulus files for all Simulation tools:
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/rtl/vlog/test/user/testbench.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CorePCS/3.6.103/coreparameters.v
+
+Constraint files:
+    D:/Work/liefast-sf2/liefast-sf2/component/work/CorePCS_C0\CorePCS_C0_0\CorePCS_C0.sdc

@@ -1,0 +1,7 @@
+    bool 'Enable ADC/DAC interface              ' CONFIG_GRADCDAC_ENABLE
+    if [ "$CONFIG_GRADCDAC_ENABLE" = "y" ]; then
+      int 'Data width (16 only)      '   CONFIG_GRADCDAC_DWIDTH 16
+      int 'Address bits (8 only)     '   CONFIG_GRADCDAC_ABITS 8
+      int 'Interrupt ID              '   CONFIG_GRADCDAC_IRQ 1
+    fi
+

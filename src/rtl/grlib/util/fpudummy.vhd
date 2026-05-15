@@ -1,0 +1,21 @@
+------------------------------------------------------------------------------
+--  This file is a part of the GRLIB VHDL IP LIBRARY
+--  Copyright (C) 2017, Cobham Gaisler AB - all rights reserved.
+--
+-- ANY USE OR REDISTRIBUTION IN PART OR IN WHOLE MUST BE HANDLED IN 
+-- ACCORDANCE WITH THE GAISLER LICENSE AGREEMENT AND MUST BE APPROVED 
+-- IN ADVANCE IN WRITING. 
+-----------------------------------------------------------------------------
+-- package: 	fpudummy
+-- File:	fpudummy.vhd
+-- Author:	Jiri Gaisler, Gaisler Research
+-- Description:	Dummy package for FPU-less distributions
+------------------------------------------------------------------------------
+
+
+package fpudummy is 
+
+constant dummy : integer := 0;
+
+end;
+

@@ -1,0 +1,111 @@
+------------------------------------------------------------------------------
+--  This file is a part of the GRLIB VHDL IP LIBRARY
+--  Copyright (C) 2017, Cobham Gaisler AB - all rights reserved.
+--
+-- ANY USE OR REDISTRIBUTION IN PART OR IN WHOLE MUST BE HANDLED IN 
+-- ACCORDANCE WITH THE GAISLER LICENSE AGREEMENT AND MUST BE APPROVED 
+-- IN ADVANCE IN WRITING. 
+-----------------------------------------------------------------------------
+-- Entity: 	inpad_ddr, inpad_ddrv
+-- File:	inpad_ddr.vhd
+-- Author:	Jan Andersson - Aeroflex Gaisler
+-- Description:	Wrapper that instantiates an input pad connected to a DDR_IREG.
+--              The generic tech wrappers are not used for nextreme since this
+--              technology is not wrapped by ddr_ireg.
+------------------------------------------------------------------------------
+
+library techmap;
+library ieee;
+use ieee.std_logic_1164.all;
+use techmap.gencomp.all;
+use techmap.allddr.all;
+use techmap.allpads.all;
+
+entity inpad_ddr is
+  generic (
+    tech     : integer := 0;
+    level    : integer := 0; 
+    voltage  : integer := x33v;
+    filter   : integer := 0;
+    strength : integer := 0
+    );
+  port (
+    pad    : in  std_ulogic;
+    o1, o2 : out std_ulogic;
+    c1, c2 : in  std_ulogic;
+    ce     : in  std_ulogic;
+    r      : in  std_ulogic;
+    s      : in  std_ulogic
+  );
+end; 
+
+architecture rtl of inpad_ddr is
+
+  signal d : std_ulogic;
+  signal gnd : std_ulogic;
+  
+begin
+
+  gnd <= '0';
+  
+  def: if (tech /= easic90) and (tech /= easic45) generate
+    p : inpad generic map (tech, level, voltage, filter, strength)
+      port map (pad, d);  
+    ddrreg : ddr_ireg generic map (tech)
+      port map (o1, o2, c1, c2, ce, d, r, s, gnd, gnd);
+  end generate def;
+
+  nex  : if (tech = easic90) generate
+    p : nextreme_inpad generic map (level, voltage)
+      port map(pad, d);
+    ddrreg : nextreme_iddr_reg
+      port map (ck => c1, d => d, qh => o1, ql => o2, rstb => r);
+  end generate;
+
+  n2x : if (tech = easic45) generate
+    p :  n2x_inpad_ddr generic map (level, voltage)
+      port map (pad, o1, o2, c1, c2, ce, r, s);
+    d <= '0';
+  end generate;
+  
+end;
+
+library techmap;
+library ieee;
+use ieee.std_logic_1164.all;
+use techmap.gencomp.all;
+use techmap.allpads.all;
+
+entity inpad_ddrv is
+  generic (
+    tech     : integer := 0;
+    level    : integer := 0; 
+    voltage  : integer := 0;
+    filter   : integer := 0;
+    strength : integer := 0;
+    width    : integer := 1
+    );
+  port (
+    pad    : in  std_logic_vector(width-1 downto 0); 
+    o1, o2 : out std_logic_vector(width-1 downto 0); 
+    c1, c2 : in  std_ulogic;
+    ce     : in  std_ulogic;
+    r      : in  std_ulogic;
+    s      : in  std_ulogic
+    );
+end; 
+
+architecture rtl of inpad_ddrv is
+begin
+  n2x : if (tech = easic45) generate
+    p :  n2x_inpad_ddrv generic map (level, voltage, width)
+      port map (pad, o1, o2, c1, c2, ce, r, s);
+  end generate;
+  base : if (tech /= easic45) generate
+    v : for i in width-1 downto 0 generate
+      x0 : inpad_ddr generic map (tech, level, voltage, filter, strength)
+        port map (pad(i), o1(i), o2(i), c1, c2, ce, r, s);
+    end generate;
+  end generate;
+end;
+

@@ -1,0 +1,29 @@
+Microchip Technology Inc. - Microchip Libero Software Release 2025.2 (Version 2025.2.0.14)
+
+Date      :  Wed Feb  4 18:20:21 2026
+Project   :  D:\Work\liefast-sf2\liefast-sf2
+Component :  CoreAPB3_C0
+Family    :  SmartFusion2
+
+
+HDL source files for all Synthesis and Simulation tools:
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/core/coreapb3.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/core/coreapb3_muxptob3.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/core/coreapb3_iaddr_reg.v
+    D:/Work/liefast-sf2/liefast-sf2/component/work/CoreAPB3_C0/CoreAPB3_C0.v
+
+Stimulus files for all Simulation tools:
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/mti/scripts/wave_user.do
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/mti/scripts/bfmtovec_compile.tcl
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/mti/scripts/bfmtovec.exe
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/mti/scripts/bfmtovec.lin
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/mti/scripts/coreapb3_usertb_master.bfm
+
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/coreparameters.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/amba_bfm/bfm_main.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/amba_bfm/bfm_ahbtoapb.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/amba_bfm/bfm_apb.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/amba_bfm/bfm_apbslaveext.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/amba_bfm/bfm_apbslave.v
+    D:/Work/liefast-sf2/liefast-sf2/component/Actel/DirectCore/CoreAPB3/4.2.100/rtl/vlog/test/user/testbench.v
+

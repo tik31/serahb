@@ -845,7 +845,7 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 			when IDLE =>
 				vtx.lf_data_val_tx := '0';
 				if (r.ctrl.start = '1') then
-					if (r.sts.busy_m = '0') then 
+					if (r.sts.busy_m = '0') then
 						vtx.timer_send := timeout_lf;
 					end if;
 					vtx.busy_m := '1';--v.sts.busy_m := '1';
@@ -853,6 +853,10 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 					if (lf_req_data_tx = '1') then
 						vtx.xmit_state := SEND_OP;
 						vtx.data_count := 0;
+						-- Drive OP byte already on the transition so spi_phy can
+						-- latch it on the SAME cycle as the SEND_OP register update.
+						vtx.lf_data_val_tx := '1';
+						vtx.data_tx := "000000" & r.ctrl.op;
 					elsif (rtx.timer_send = 0) then
 						vtx.busy_m := '0';--v.sts.busy_m := '0';
 						vtx.start := '0';--v.ctrl.start := '0';
@@ -861,7 +865,7 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 						vtx.timer_send := rtx.timer_send - 1;
 					end if;
 				elsif ((r.start_reply(1) = '1') and (rtx.start_reply = '1')) then
-					if (r.timer_send = '1') then 
+					if (r.timer_send = '1') then
 						vtx.timer_send := timeout_lf;
 					end if;
 					vtx.lf_data_rdy_tx := '1';
@@ -871,6 +875,9 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 						end if;
 						vtx.xmit_state := SEND_REPLY_STATUS;
 						vtx.data_count := 0;
+						-- Drive reply status byte on the transition.
+						vtx.lf_data_val_tx := '1';
+						vtx.data_tx := "100000" & r.rply_status;
 					elsif (rtx.timer_send = 0) then
 						vtx.busy_s := '0';--v.sts.busy_s := '0';
 						vtx.start_reply := '0';--v.start_reply := "00";
@@ -887,7 +894,7 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 					vtx.start := '0';--v.ctrl.start := '0';
 			
 			when SEND_ADDR =>
-				if ((rtx.lf_req_data_tx and (lf_req_data_tx or not rtx.lf_data_rdy_tx)) = '1') then
+				if (lf_req_data_tx = '1') then
 					vtx.timer_send := timeout_lf;
 					vtx.lf_data_val_tx := '1';
 					vtx.data_tx := r.ctrl.address(rtx.data_count * 8 + 7 downto rtx.data_count * 8);
@@ -907,7 +914,7 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 				end if;
 			
 			when SEND_LENGTH =>
-				if ((rtx.lf_req_data_tx and (lf_req_data_tx or not rtx.lf_data_rdy_tx)) = '1') then
+				if (lf_req_data_tx = '1') then
 					vtx.timer_send := timeout_lf;
 					vtx.lf_data_val_tx := '1';
 					vtx.data_tx := r.ctrl.len(rtx.data_count * 8 + 7 downto rtx.data_count * 8);
@@ -930,7 +937,7 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 				if ((r.ctrl.op = "01") or (r.ctrl.op = "00") or (r.ctrl.op = "11") or (r.ctrl.op = "10" and r.ctrl.len = x"0000")) then --or (r.ctrl.op = "10" and r.data_count = 1 and r.ctrl.len = x"0001")) or (r.ctrl.op = "10" and r.ctrl.len = x"0000")) then 
 					vtx.lf_data_rdy_tx := '0';
 				end if;
-				if ((rtx.lf_req_data_tx and (lf_req_data_tx or not rtx.lf_data_rdy_tx)) = '1') then
+				if (lf_req_data_tx = '1') then
 					vtx.timer_send := timeout_lf;
 					vtx.lf_data_val_tx := '1';
 					vtx.data_tx := r.ctrl.timeout(rtx.data_count * 8 + 7 downto rtx.data_count * 8);
@@ -959,16 +966,14 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 			when SEND_DATA =>
 				vtx.ra_mem_xmit := std_logic_vector(to_unsigned((((rtx.data_count + 1) / 4) mod 1024),10));
 				vtx.lf_data_val_tx := '0';
-				if ((rtx.lf_req_data_tx and (lf_req_data_tx or not rtx.lf_data_rdy_tx)) = '1') then
+				if (lf_req_data_tx = '1') then
 					vtx.timer_send := timeout_lf;
 					if (rtx.data_count < (conv_integer(r.ctrl.len) * 4)) then
-						vtx.ready_mem_xmit := not rtx.ready_mem_xmit;
-						if (rtx.ready_mem_xmit = '1') then 
-							vtx.lf_data_val_tx := '1';
-							vtx.data_tx := rd_mem_xmit(8*(rtx.data_count mod 4) + 7 downto 8*(rtx.data_count mod 4));
-							--vtx.data_tx := mem_xmit((rtx.data_count / 4) mod 1024)(8*(rtx.data_count mod 4) + 7 downto 8*(rtx.data_count mod 4));
-							vtx.data_count := rtx.data_count + 1;
-						end if;
+						-- One strobe = one byte (no toggle); SPI's per-frame gap gives the
+						-- inferred RAM the required cycle to latch a new read address.
+						vtx.lf_data_val_tx := '1';
+						vtx.data_tx := rd_mem_xmit(8*(rtx.data_count mod 4) + 7 downto 8*(rtx.data_count mod 4));
+						vtx.data_count := rtx.data_count + 1;
 						if (rtx.data_count = (conv_integer(r.ctrl.len) * 4 - 1)) then vtx.lf_data_rdy_tx := '0'; end if;
 					else
 						vtx.lf_data_val_tx := '0';
@@ -1003,22 +1008,20 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 			when SEND_REPLY_DATA =>
 				vtx.ra_mem_rply := std_logic_vector(to_unsigned(((rtx.data_count + 1) / 4),10));
 				vtx.lf_data_val_tx := '0';
-				if ((rtx.lf_req_data_tx and (lf_req_data_tx or not rtx.lf_data_rdy_tx)) = '1') then
+				if (lf_req_data_tx = '1') then
 					vtx.timer_send := timeout_lf;
 					if (rtx.data_count < (conv_integer(r.ahb.len) * 4)) then
-						vtx.ready_mem_rply := not rtx.ready_mem_rply;
-						if (rtx.ready_mem_rply = '1') then 
-							vtx.lf_data_val_tx := '1';
-							vtx.data_tx := rd_mem_rply(8*(rtx.data_count mod 4) + 7 downto 8*(rtx.data_count mod 4));
-							vtx.data_count := rtx.data_count + 1;
-						end if;
+						-- One strobe = one byte (no toggle).
+						vtx.lf_data_val_tx := '1';
+						vtx.data_tx := rd_mem_rply(8*(rtx.data_count mod 4) + 7 downto 8*(rtx.data_count mod 4));
+						vtx.data_count := rtx.data_count + 1;
 						if (rtx.data_count = (conv_integer(r.ahb.len) * 4 - 1)) then vtx.lf_data_rdy_tx := '0'; end if;
 					else
 						vtx.start_reply := '0';--v.start_reply := "00";
 						vtx.lf_data_val_tx := '0';
 						vtx.xmit_state := IDLE;
 						vtx.busy_s := '0';--v.sts.busy_s := '0';
-					end if;	
+					end if;
 				elsif (rtx.timer_send = 0) then
 					vtx.data_count := 0;
 					vtx.xmit_state := IDLE;

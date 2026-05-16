@@ -19,72 +19,64 @@ library lfast_comps;
 use lfast_comps.all;
 
 entity dut is
-    port (
-		rst 		: in std_logic;
-		clk 		: in std_logic;
-		debug_ahbmo	: in ahb_mst_out_type;
-		debug_ahbmi	: out ahb_mst_in_type;
-		RXD0_N		: in std_logic;
-		RXD0_P		: in std_logic;
-		RXD1_N		: in std_logic;
-		RXD1_P		: in std_logic;
-		RXD2_N		: in std_logic;
-		RXD2_P		: in std_logic;
-		RXD3_N		: in std_logic;
-		RXD3_P		: in std_logic;
-		TXD0_N		: out std_logic;
-		TXD0_P		: out std_logic;
-		TXD1_N		: out std_logic;
-		TXD1_P		: out std_logic;
-		TXD2_N		: out std_logic;
-		TXD2_P		: out std_logic;
-		TXD3_N		: out std_logic;
-		TXD3_P		: out std_logic;
+	generic (
+		g_master : boolean := true
+	);
+	port (
+		rst         : in  std_logic;
+		clk         : in  std_logic;
+		debug_ahbmo : in  ahb_mst_out_type;
+		debug_ahbmi : out ahb_mst_in_type;
+		sclk_o      : out std_logic;
+		sclk_i      : in  std_logic;
+		mosi_o      : out std_logic;
+		mosi_i      : in  std_logic;
+		miso_o      : out std_logic;
+		miso_i      : in  std_logic;
+		ss_n_o      : out std_logic;
+		ss_n_i      : in  std_logic;
 		serdes_ready: out std_logic;
-		clk_out		: out std_logic
+		clk_out     : out std_logic
 	);
 end dut;
 
 architecture arch of dut is
 
-    component top is
-    port (
-		CLK0_PAD				: in std_logic;
-		RXD0_N					: in std_logic;
-		RXD0_P					: in std_logic;
-		RXD1_N					: in std_logic;
-		RXD1_P					: in std_logic;
-		RXD2_N					: in std_logic;
-		RXD2_P					: in std_logic;
-		RXD3_N					: in std_logic;
-		RXD3_P					: in std_logic;
-		usr_data_rdy_tx_i		: in std_logic;
-		usr_data_tx_i			: in std_logic_vector(7 downto 0);
-		usr_data_val_tx_i		: in std_logic;
-		EPCS_0_TX_CLK_STABLE	: out std_logic;
-		TXD0_N					: out std_logic;
-		TXD0_P					: out std_logic;
-		TXD1_N					: out std_logic;
-		TXD1_P					: out std_logic;
-		TXD2_N					: out std_logic;
-		TXD2_P					: out std_logic;
-		TXD3_N					: out std_logic;
-		TXD3_P					: out std_logic;
-		block_aligned_rx_o		: out std_logic_vector(0 downto 0);
-		crc_err_rx_o			: out std_logic;
-		lane_aligned_rx_o		: out std_logic;
-		req_usr_data_tx_o		: out std_logic;
-		usr_data_rx_o			: out std_logic_vector(7 downto 0);
-		usr_data_val_rx_o		: out std_logic;
-		clk50					: out std_logic;
-		clk_tx					: out std_logic;
-		clk_rx					: out std_logic;
-		reset					: out std_logic
-    );
-    end component;
-	
+	component FCCC_C0 is
+		port (
+			CLK0_PAD : in  std_logic;
+			GL0      : out std_logic;
+			GL1      : out std_logic;
+			LOCK     : out std_logic
+		);
+	end component;
+
+	component spi_phy is
+		generic(
+			g_master  : boolean := true;
+			g_clk_div : integer := 5
+		);
+		port(
+			clk        : in  std_logic;
+			rstn       : in  std_logic;
+			tx_byte_i  : in  std_logic_vector(7 downto 0);
+			tx_valid_i : in  std_logic;
+			tx_req_o   : out std_logic;
+			rx_byte_o  : out std_logic_vector(7 downto 0);
+			rx_valid_o : out std_logic;
+			sclk_o     : out std_logic;
+			sclk_i     : in  std_logic;
+			mosi_o     : out std_logic;
+			mosi_i     : in  std_logic;
+			miso_o     : out std_logic;
+			miso_i     : in  std_logic;
+			ss_n_o     : out std_logic;
+			ss_n_i     : in  std_logic
+		);
+	end component;
+
 	component serahb is
-		generic( 
+		generic(
 			hindex : integer := 0;
 			haddr  : integer := 0;
 			hmask  : integer := 16#fff#;
@@ -92,93 +84,97 @@ architecture arch of dut is
 			hirq   : integer := 0
 		);
 		port (
-			clk          	: IN	std_logic;
-			rst          	: IN	std_logic;
-			ahbsi        	: IN	ahb_slv_in_type;
-			ahbso        	: OUT	ahb_slv_out_type;
-			ahbmi		 	: IN	ahb_mst_in_type;
-			ahbmo		 	: OUT	ahb_mst_out_type;
-			lf_req_data_tx	: IN	std_logic;
-			lf_data_val_rx	: IN	std_logic;
-			lf_data_rx		: IN	std_logic_vector(7 downto 0);
-			lf_data_rdy_tx	: OUT	std_logic;
-			lf_data_tx		: OUT	std_logic_vector(7 downto 0);
-			lf_data_val_tx	: OUT	std_logic
+			clk            : IN  std_logic;
+			rst            : IN  std_logic;
+			ahbsi          : IN  ahb_slv_in_type;
+			ahbso          : OUT ahb_slv_out_type;
+			ahbmi          : IN  ahb_mst_in_type;
+			ahbmo          : OUT ahb_mst_out_type;
+			lf_req_data_tx : IN  std_logic;
+			lf_data_val_rx : IN  std_logic;
+			lf_data_rx     : IN  std_logic_vector(7 downto 0);
+			lf_data_rdy_tx : OUT std_logic;
+			lf_data_tx     : OUT std_logic_vector(7 downto 0);
+			lf_data_val_tx : OUT std_logic
 		);
 	end component;
-    	
-	signal ahbsi : ahb_slv_in_type;
-    signal ahbso : ahb_slv_out_vector := (others => ahbs_none);
-    signal ahbmi : ahb_mst_in_type;
-    signal ahbmo : ahb_mst_out_vector := (others => ahbm_none);
-	
-	signal req_usr_data_tx_o	: std_logic;
-	signal usr_data_val_rx_o	: std_logic;
-	signal usr_data_rx_o		: std_logic_vector(7 downto 0);
-	signal usr_data_rdy_tx_i	: std_logic;
-	signal usr_data_tx_i		: std_logic_vector(7 downto 0);
-	signal usr_data_val_tx_i	: std_logic;
-	
-	signal clkm, clk_tx, clk_rx	: std_logic;
-	signal rstn	: std_logic;
-	
-begin  -- architecture behav
 
-    ahbmo(1) <= debug_ahbmo;
+	signal ahbsi : ahb_slv_in_type;
+	signal ahbso : ahb_slv_out_vector := (others => ahbs_none);
+	signal ahbmi : ahb_mst_in_type;
+	signal ahbmo : ahb_mst_out_vector := (others => ahbm_none);
+
+	signal lf_req_data_tx : std_logic;
+	signal lf_data_val_rx : std_logic;
+	signal lf_data_rx     : std_logic_vector(7 downto 0);
+	signal lf_data_rdy_tx : std_logic;
+	signal lf_data_tx     : std_logic_vector(7 downto 0);
+	signal lf_data_val_tx : std_logic;
+
+	signal clkm     : std_logic;
+	signal pll_lock : std_logic;
+
+begin  -- architecture arch
+
+	ahbmo(1) <= debug_ahbmo;
 	debug_ahbmi <= ahbmi;
-	
+
 	clk_out <= clkm;
-	
-	lfast : top
-        port map (
-			CLK0_PAD				=> clk,
-			RXD0_N					=> RXD0_N,
-			RXD0_P					=> RXD0_P,
-			RXD1_N					=> RXD1_N,
-			RXD1_P					=> RXD1_P,
-			RXD2_N					=> RXD2_N,
-			RXD2_P					=> RXD2_P,
-			RXD3_N					=> RXD3_N,
-			RXD3_P					=> RXD3_P,
-			usr_data_rdy_tx_i		=> usr_data_rdy_tx_i,
-			usr_data_tx_i			=> usr_data_tx_i,
-			usr_data_val_tx_i		=> usr_data_val_tx_i,
-			EPCS_0_TX_CLK_STABLE	=> open,
-			TXD0_N					=> TXD0_N,
-			TXD0_P					=> TXD0_P,
-			TXD1_N					=> TXD1_N,
-			TXD1_P					=> TXD1_P,
-			TXD2_N					=> TXD2_N,
-			TXD2_P					=> TXD2_P,
-			TXD3_N					=> TXD3_N,
-			TXD3_P					=> TXD3_P,
-			block_aligned_rx_o		=> open,
-			crc_err_rx_o			=> open,
-			lane_aligned_rx_o		=> serdes_ready,
-			req_usr_data_tx_o		=> req_usr_data_tx_o,
-			usr_data_rx_o			=> usr_data_rx_o,
-			usr_data_val_rx_o		=> usr_data_val_rx_o,
-			clk50					=> clkm,
-			clk_tx					=> clk_tx,
-			clk_rx					=> clk_rx,
-			reset					=> rstn
-    );
+	-- Ready when reset is deasserted (rst is active-low)
+	serdes_ready <= rst;
+
+	-- Simulation bypass: FCCC_C0 SmartFusion2 PLL model exhibits clock-startup
+	-- issues in pure VHDL simulation. Since clk in is already 50 MHz, pass through.
+	-- Real hardware retains FCCC_C0 (see serahb_fpga.vhd).
+	clkm <= clk;
+	pll_lock <= '1';
+
+	-- pll0 : FCCC_C0
+	--     port map (
+	--         CLK0_PAD => clk,
+	--         GL0      => clkm,
+	--         GL1      => open,
+	--         LOCK     => pll_lock
+	--     );
+
+	spi0 : spi_phy
+		generic map (
+			g_master  => g_master,
+			g_clk_div => 5
+		)
+		port map (
+			clk        => clkm,
+			rstn       => rst,
+			tx_byte_i  => lf_data_tx,
+			tx_valid_i => lf_data_val_tx,
+			tx_req_o   => lf_req_data_tx,
+			rx_byte_o  => lf_data_rx,
+			rx_valid_o => lf_data_val_rx,
+			sclk_o     => sclk_o,
+			sclk_i     => sclk_i,
+			mosi_o     => mosi_o,
+			mosi_i     => mosi_i,
+			miso_o     => miso_o,
+			miso_i     => miso_i,
+			ss_n_o     => ss_n_o,
+			ss_n_i     => ss_n_i
+		);
 
 	ahb0 : ahbctrl                        -- AHB arbiter/multiplexer
-        generic map (
-            fpnpen      => 1,
-			ahbtrace	=> 1,
-			nahbm		=> 2,
-			nahbs		=> 2
-        )
-        port map (rst, clkm, ahbmi, ahbmo, ahbsi, ahbso);
-		
+		generic map (
+			fpnpen   => 1,
+			ahbtrace => 1,
+			nahbm    => 2,
+			nahbs    => 2
+		)
+		port map (rst, clkm, ahbmi, ahbmo, ahbsi, ahbso);
+
 	ahbram0: ahbram
-        generic map (
-            tech   => 0, 
-            kbytes => 64
-        )
-        port map (rst, clkm, ahbsi, ahbso(0));
+		generic map (
+			tech   => 0,
+			kbytes => 64
+		)
+		port map (rst, clkm, ahbsi, ahbso(0));
 
 	serial_ahb0: serahb
 		generic map (
@@ -189,20 +185,18 @@ begin  -- architecture behav
 			hirq   => 0
 		)
 		port map (
-			clk          	=> clkm,
-			rst          	=> rstn,
-			ahbsi        	=> ahbsi,
-			ahbso        	=> ahbso(1),
-			ahbmi		 	=> ahbmi,
-			ahbmo		 	=> ahbmo(0),
-			lf_req_data_tx	=> req_usr_data_tx_o,
-			lf_data_val_rx	=> usr_data_val_rx_o,
-			lf_data_rx		=> usr_data_rx_o,
-			lf_data_rdy_tx	=> usr_data_rdy_tx_i,
-			lf_data_tx		=> usr_data_tx_i,
-			lf_data_val_tx	=> usr_data_val_tx_i
+			clk            => clkm,
+			rst            => rst,
+			ahbsi          => ahbsi,
+			ahbso          => ahbso(1),
+			ahbmi          => ahbmi,
+			ahbmo          => ahbmo(0),
+			lf_req_data_tx => lf_req_data_tx,
+			lf_data_val_rx => lf_data_val_rx,
+			lf_data_rx     => lf_data_rx,
+			lf_data_rdy_tx => lf_data_rdy_tx,
+			lf_data_tx     => lf_data_tx,
+			lf_data_val_tx => lf_data_val_tx
 		);
-	
-	
- end architecture arch;
 
+end architecture arch;

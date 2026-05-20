@@ -77,6 +77,7 @@ architecture arch of dut is
 
 	component serahb is
 		generic(
+			g_master : boolean := true;
 			hindex : integer := 0;
 			haddr  : integer := 0;
 			hmask  : integer := 16#fff#;
@@ -178,6 +179,7 @@ begin  -- architecture arch
 
 	serial_ahb0: serahb
 		generic map (
+			g_master => g_master,
 			hindex => 1,
 			haddr  => 16#800#,
 			hmask  => 16#fff#,

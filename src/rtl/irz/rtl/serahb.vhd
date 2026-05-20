@@ -19,7 +19,8 @@ LIBRARY techmap;
 USE techmap.allmem.all;
 
 ENTITY serahb IS
-    GENERIC( 
+    GENERIC(
+        g_master : boolean := true;
         hindex : integer := 0;
         haddr  : integer := 0;
         hmask  : integer := 16#fff#;
@@ -287,7 +288,7 @@ ARCHITECTURE rtl OF serahb IS
 		ra_mem_rply		=> (others => '0'),
 		ready_mem_rply	=> '0'
 	);
-	
+
 	constant hconfig : ahb_config_type := (
 		0 => ahb_device_reg ( VENDOR_GAISLER, GAISLER_AHBRAM, 0, 12, 0),
 		4 => ahb_membar(haddr, '1', '1', hmask),
@@ -370,7 +371,8 @@ comb: process (r, ahbsi, ahbmi, dmao, rrx.complete, rtx.busy_m, rrx.irecv, rrx.l
 		--vmem_rply := mem_rply;
 		 
 		
---AHB SLAVE		
+--AHB SLAVE (Master mode only)
+		if g_master then
 		case (r.state) is
 			when IDLE =>
 			    v.hsel := ahbsi.hsel(hindex);
@@ -447,12 +449,18 @@ comb: process (r, ahbsi, ahbmi, dmao, rrx.complete, rtx.busy_m, rrx.irecv, rrx.l
 				v.hready := '1';
 				v.state := IDLE;
 				
-			when others => 
-				v.state := IDLE;	  
+			when others =>
+				v.state := IDLE;
 		end case;
-		
---AHBDMA		
-		
+		else
+			-- Slave mode: AHB slave interface inactive
+			v.hsel := '0';
+			v.hready := '1';
+			v.state := IDLE;
+		end if;
+
+--AHBDMA (Slave mode only)
+		if not g_master then
 		case(r.ahb_state) is
 			
 			when IDLE =>
@@ -604,7 +612,11 @@ comb: process (r, ahbsi, ahbmi, dmao, rrx.complete, rtx.busy_m, rrx.irecv, rrx.l
 				end if;
 			
 		end case;
-		
+		else
+			-- Master mode: AHB DMA inactive
+			v.ahb_state := IDLE;
+		end if;
+
 		rin <= v;
 		--rmem_xmit <= vmem_xmit;
 		--rmem_rply <= vmem_rply;
@@ -640,26 +652,24 @@ combrx: process (rrx, lf_data_val_rx, lf_data_rx, r.stsread, r.sts.busy_m, r.sts
 				vrx.timer_recv := timeout_lf;
 				if (rrx.lf_data_val_rx = '1') then
 					if (rrx.lf_data_rx(7) = '1') then
-						vrx.status := rrx.lf_data_rx(1 downto 0);--v.sts.status := rrx.lf_data_rx(1 downto 0);
-						if (r.ctrl.op = "01") then
-							vrx.recv_state := RECV_REPLY_DATA;
-							vrx.data_count := 0;
-						else
-							vrx.complete := '1';--v.sts.complete := '1';
-							vrx.busy_m := '0';--v.sts.busy_m := '0';
-							vrx.irecv := r.ctrl.irecv or r.sts.irecv;--v.sts.irecv := r.ctrl.irecv or r.sts.irecv;
+						if g_master then
+							vrx.status := rrx.lf_data_rx(1 downto 0);--v.sts.status := rrx.lf_data_rx(1 downto 0);
+							if (r.ctrl.op = "01") then
+								vrx.recv_state := RECV_REPLY_DATA;
+								vrx.data_count := 0;
+							else
+								vrx.complete := '1';--v.sts.complete := '1';
+								vrx.busy_m := '0';--v.sts.busy_m := '0';
+								vrx.irecv := r.ctrl.irecv or r.sts.irecv;--v.sts.irecv := r.ctrl.irecv or r.sts.irecv;
+							end if;
 						end if;
 					else
-						vrx.busy_s := '1';--v.sts.busy_s := '1';
-						--if ((rrx.lf_data_rx(1 downto 0) = "01") or (rrx.lf_data_rx(1 downto 0) = "10")) then
-						--	vrx.op := rrx.lf_data_rx(1 downto 0);--v.ahb.op := rrx.lf_data_rx(1 downto 0);
-						--	vrx.data_count := 0;
-						--else
-						--	vrx.rply_status := "11";--v.rply_status := "11";
-						--end if;
-						vrx.op := rrx.lf_data_rx(1 downto 0);
-						vrx.data_count := 0;
-						vrx.recv_state := RECV_ADDR;					
+						if not g_master then
+							vrx.busy_s := '1';--v.sts.busy_s := '1';
+							vrx.op := rrx.lf_data_rx(1 downto 0);
+							vrx.data_count := 0;
+							vrx.recv_state := RECV_ADDR;
+						end if;
 					end if;
 				end if;
 				
@@ -864,7 +874,7 @@ combtx: process (rtx, lf_req_data_tx, rrx.start_reply, rrx.busy_m, r.ctrl.start,
 					else
 						vtx.timer_send := rtx.timer_send - 1;
 					end if;
-				elsif ((r.start_reply(1) = '1') and (rtx.start_reply = '1')) then
+				elsif (not g_master and (r.start_reply(1) = '1') and (rtx.start_reply = '1')) then
 					if (r.timer_send = '1') then
 						vtx.timer_send := timeout_lf;
 					end if;

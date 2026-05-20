@@ -74,6 +74,7 @@ architecture arch of serahb_fpga is
 
 	component serahb is
 		generic(
+			g_master : boolean := true;
 			hindex : integer := 0;
 			haddr  : integer := 0;
 			hmask  : integer := 16#fff#;
@@ -182,6 +183,7 @@ begin  -- architecture arch
 
 	serial_ahb0: serahb
 		generic map (
+			g_master => g_master,
 			hindex => SERAHB_SHINDEX,
 			haddr  => SERAHB_SHADDR,
 			hmask  => 16#fff#,
